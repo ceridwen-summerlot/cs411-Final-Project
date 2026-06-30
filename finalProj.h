@@ -82,6 +82,7 @@ struct Instruction{
 	int cycleEX;
 	int cycleMEM;
 	int cycleWB;
+	int cyclesSoFar;
 };
 //FP register struct
 	//current data
