@@ -3,12 +3,16 @@
 #include <iostream>
 #include <cstdlib>
 #include <iomanip>
+#include <vector>
 
 //what functions are neccessary
 
 //iterate through instructions
 //read instructions from file
 public string readNextInstruction(ifstream Inputfile);
+
+//progress all active functions
+public void progressActiveFunctions();
 
 //execute load float
 //execute store float
@@ -42,25 +46,58 @@ public void print();
 
 //what classes do we need
 
-//cache class
+//cache struct
 	// 8 sets
 	// least recently accessed
-//block class
+struct cache{
+	Block sets[8];
+	Block* LRA;
+};
+
+//block struct
 	//memory adress
 	//value
-//instruction class
+struct Block{
+	int orginalAdress;
+	float value;
+};
+
+//instruction struct
 	//instruction type
 	//stage
 	//stalled
 	//data available
 	//completed
+struct Instruction{
+	int type; //using enumerated strings
+	string stage;
+	int dest;
+	int src1;
+	int src2;
+	bool stalled;
+	bool dataAvailable;
+	bool completed;
+	int cycleIF;
+	int cycleID;
+	int cycleEX;
+	int cycleMEM;
+	int cycleWB;
+};
 //FP register struct
 	//current data
+struct FPReg{
+	float data;
+};
 //INT register struct
 	//current data
+struct IntReg{
+	int data;
+};
 //other stuff we need
 
 //main memory array
+//active instructions vector
+//instructions vector
 //instruction counter
 //cycle counter
 //branch predictor (I'm not super sure how to implement this)
