@@ -190,8 +190,20 @@ public Instruction readNextInstruction(ifstream inputFile){
 
 }
 int main{
+	//Initialize Main Memory
 	vector<float> mainMemory = {45, 12, 0, 92, 10, 135, 254, 127, 18, 4, 55, 8, 2, 98, 13, 5, 233, 158, 167}
-
-} 
+	//Open instruction file via ifstream
+	string instructionFileName
+	cout << "Enter name of instructions file: ";
+	cin >> instructionFileName;
+	ifstream instructionFile(instructionFileName);
+	while (!instructionFile.is_open()) {
+		cout << "Could not open file." << "\n";
+		cin >> instructionFileName;
+		ifstream instructionFile(instructionFileName);
+	}
+	
+	
+}
 	return 0
 }
