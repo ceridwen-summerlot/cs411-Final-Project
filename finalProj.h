@@ -94,6 +94,10 @@ struct FPReg{
 struct IntReg{
 	int data;
 };
+//Main Memory Struct
+struct MainMem{
+	float data;
+};
 //other stuff we need
 
 //main memory array
