@@ -189,6 +189,137 @@ public Instruction readNextInstruction(ifstream inputFile){
 	return instruction;
 
 }
+
+//Ticks forward one clock cycle, checks for completion, pops instruction if completed
+progressActiveInstructions(vector<int>& active) {
+	for (int i = 0; i < active.size(); i++) {
+		active.at(i).cyclesSoFar++;
+		checkCompletion(active.at(i));
+		if(active.at(i).completed == true) {
+			active.erase(active.begin() + i);
+		}
+	}
+}
+
+//checks which step the instruction has finished and executes accordingly
+public void checkCompletion(Instruction instructy){
+	switch (instructy.type) {
+		//floats take 6 cycles (2 EX stage)
+		case LD: //load float
+			if (instructy.cyclesSoFar == 4){
+				exeMemOp(instructy);
+			}
+			if (instructy.cyclesSoFar == 6){
+				instructy.completed = true;
+			}
+		case SD: //store float
+			if (instructy.cyclesSoFar == 4){
+				exeMemOp(instructy);
+			}
+			if (instructy.cyclesSoFar == 6){
+				instructy.completed = true;
+			}
+		case LI: //load immediate
+			if (instructy.cyclesSoFar == 4){
+				exeMemOp(instructy);
+			}
+			if (instructy.cyclesSoFar == 5){
+				instructy.completed = true;
+			}
+		//int takes 5 cycles
+		case LW: //load int
+			if (instructy.cyclesSoFar == 3){
+				exeMemOp(instructy);
+			}
+			if (instructy.cyclesSoFar == 5){
+				instructy.completed = true;
+			}
+		case SW: //store int
+			if (instructy.cyclesSoFar == 3){
+				exeMemOp(instructy);
+			}
+			if (instructy.cyclesSoFar == 5){
+				instructy.completed = true;
+			}
+		//integer add takes 1 cycle
+		case ADD:
+			if (instructy.cyclesSoFar == 3){
+				exeALUOp(instructy);
+			}
+			if (instructy.cyclesSoFar == 5){
+				instructy.completed = true;
+			}
+	
+		case ADDI:
+			if (instructy.cyclesSoFar == 3){
+				exeALUOp(instructy);
+			}
+			if (instructy.cyclesSoFar == 5){
+                                instructy.completed = true;
+                        }
+		//float add takes 2 cycles
+		case ADDD:
+			if (instructy.cyclesSoFar == 4){
+				exeALUOp(instructy);
+			}
+			if (instructy.cyclesSoFar == 6){
+                                instructy.completed = true;
+                        }
+		case SUBD:
+			if (instructy.cyclesSoFar == 4){
+				exeALUOp(instructy);
+			}
+			if (instructy.cyclesSoFar == 6){
+                                instructy.completed = true;
+                        }
+		//integer sub takes 1 cycles
+		case SUB:
+			if (instructy.cyclesSoFar == 3){
+				exeALUOp(instructy);
+			}
+			if (instructy.cyclesSoFar == 5){
+                                instructy.completed = true;
+                        }
+		//float mult takes 10 cycles
+		case MULD:
+			if (instructy.cyclesSoFar == 12){
+				exeALUOp(instructy);
+			}
+			if (instructy.cyclesSoFar == 14){
+                                instructy.completed = true;
+                        }
+		//float division takes 40 cycles
+		case DIVD:
+			if (instructy.cyclesSoFar == 42){
+				exeALUOp(instructy);
+			}
+			if (instructy.cyclesSoFar == 44){
+                                instructy.completed = true;
+                        }
+		case BEQ:
+			if (instructy.cyclesSoFar == 3){
+				exeBranchOp(instructy);
+			}
+			if(instructy.cyclesSoFar == 5){
+				instructy.completed = true;
+			}
+		case BNE: 
+			if (instructy.cyclesSoFar == 3){
+				exeBranchOp(instructy);
+			}
+			if(instructy.cyclesSoFar == 5){
+				instructy.completed = true;
+			}
+		case J:
+			if (instructy.cyclesSoFar == 3){
+				exeBranchOp(instructy);
+			}
+			if(instructy.cyclesSoFar == 5){
+				instructy.completed = true;
+			}
+	}
+}
+
 int main{
 	//Initialize Main Memory
 	vector<float> mainMemory = {45, 12, 0, 92, 10, 135, 254, 127, 18, 4, 55, 8, 2, 98, 13, 5, 233, 158, 167}
@@ -202,8 +333,14 @@ int main{
 		cin >> instructionFileName;
 		ifstream instructionFile(instructionFileName);
 	}
-	
+
+	//loop until we reach the end of the file
+	vector<Instruction> currentlyRunningInstructions;
+	while (instructionFile.peek() != ifstream::traits_type::eof()) {
+		currentlyRunningInstructions.push_back(readNextInstruction(ifstream instructionFile));
+		progressActiveInstructions(&currentlyRunningInstructions);
+	}
 	
 }
-	return 0
+	return 0;
 }
