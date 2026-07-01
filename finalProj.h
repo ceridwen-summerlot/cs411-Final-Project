@@ -12,7 +12,7 @@
 public string readNextInstruction(ifstream Inputfile);
 
 //progress all active functions
-public void progressActiveFunctions(vector<int>& active);
+public void progressActiveInstructions(vector<int>& active);
 
 //execute load float
 //execute store float
