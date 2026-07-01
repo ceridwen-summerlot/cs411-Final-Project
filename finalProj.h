@@ -22,7 +22,7 @@ public void checkCompletion(Instruction instructy);
 //execute load immediate
 //execute load int
 //execute store int
-public void exeMemOp(int operation);
+public void exeMemOp(Instruction instructy);
 
 //execute int add
 //execute int add w/ immediate
@@ -31,12 +31,12 @@ public void exeMemOp(int operation);
 //execute int sub
 //execute float mult
 //execute float div
-public void exeALUOp(int operation);
+public void exeALUOp(Instruction instructy);
 
 //execute jump if equal
 //execute jump if not equal
 //execute unconditional jump
-public void exeBranchOp(int operation);
+public void exeBranchOp(Instruction instructy);
 
 //load to cache
 public void loadCache(Block block);
