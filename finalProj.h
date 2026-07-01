@@ -14,6 +14,9 @@ public string readNextInstruction(ifstream Inputfile);
 //progress all active functions
 public void progressActiveInstructions(vector<int>& active);
 
+//checks if function is completed with execution & write-back
+public void checkCompletion(Instruction instructy);
+
 //execute load float
 //execute store float
 //execute load immediate
