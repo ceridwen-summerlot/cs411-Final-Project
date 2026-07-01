@@ -1,4 +1,5 @@
 #include "finalProj.h"
+using namespace std;
 
 enum Operations{
 	LD,
@@ -189,6 +190,8 @@ public Instruction readNextInstruction(ifstream inputFile){
 
 }
 int main{
-	
+	vector<float> mainMemory = {45, 12, 0, 92, 10, 135, 254, 127, 18, 4, 55, 8, 2, 98, 13, 5, 233, 158, 167}
+
+} 
 	return 0
 }
